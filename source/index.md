@@ -20,16 +20,240 @@ search: true
 
 고블린클럽 커뮤니티 사이트
 
+- :3000 : Front Server
+- :3001 : API Server
+- :3002 : Image Server
+- :3003 : Document Server
 
-# Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+# 소개
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+## Front Server -> React Store data 정의
 
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+<aside class="notice">
+SEO를 목표로 하며, 주소창의 URL 접근시 데이터를 HTML에 삽입하여 React의 State를 Bootstrap 합니다
+Composer.Server에서 데이터를 정의하며, 이를 응답 html에 삽입합니다
+기본적으로 Interact 하지 않으며 뼈대가 되는 페이지이며, 정해진 데이터를 기준으로만 세팅합니다.(초기세팅)
+따라서 대부분 GET 메서드에 의한 페이지 출력에 관여합니다
+</aside>    
 
-# Authentication
+- 데이터 목록
+
+[/](#kittens) - 메인 페이지. 베스트 자료와 클럽리스트를 나타냅니다 
+
+[/submit](#kittens) - 일반 글쓰기 페이지. 클럽에 종속되지 않습니다 
+
+[/club](#kittens) - 클럽 리스트를 나타냅니다 각종 클럽들을 콜랙션합니다 
+ 
+[/club/{clubname}](#kittens) - clubname에 따른 Post List를 나타냅니다 
+
+[/club/{clubname}/{article}](#kittens) - ID가 article인 clubname에 속하는 Post를 나타냅니다 
+ 
+[/club/{clubname}/submit](#kittens) - 클럽 내 글쓰기 페이지.
+ 
+[/login](#kittens) - 로그인 페이지
+ 
+[/siginin](#kittens) - 회원가입 페이지
+ 
+[/search](#kittens) - 검색 페이지. 클럽 리스트, 글 리스트, 댓글 리스트를 나타냅니다.
+
+## User Interact <-> Api Server AJAX data 정의
+
+<aside class="notice">
+사용자의 Interact에 의해서 주고 받는 React Store 데이터에 필요한 데이터를 정의합니다. 
+페이지가 될수도 있고, 일반적인 Json Data일 경우도 있습니다
+</aside>    
+
+### API 목록
+
+/ : 메인 페이지
+
+- [internal link](#error-code-definitions) external link
+    
+- [internal link](#error-code-definitions) external link
+    
+- [internal link](#error-code-definitions) external link
+    
+- [internal link](#error-code-definitions) external link
+
+/ : 메인 페이지
+
+- [internal link](#error-code-definitions) external link
+    
+- [internal link](#error-code-definitions) external link
+    
+- [internal link](#error-code-definitions) external link
+    
+- [internal link](#error-code-definitions) external link
+
+/ : 메인 페이지
+
+- [internal link](#error-code-definitions) external link
+    
+- [internal link](#error-code-definitions) external link
+    
+- [internal link](#error-code-definitions) external link
+    
+- [internal link](#error-code-definitions) external link
+
+## React Store State 정의
+
+<aside class="notice">
+Composer.Server 와 Composer.Client에서 사용되는 React State를 정의 합니다
+</aside>    
+
+### UserStore
+
+사용자의 데이터를 저장합니다
+
+```json
+{
+    "user" : {
+        "email" : "bsdo@naver.com",
+        "nick" : "고블린클럽"
+    },
+    "auth" : {
+        "state" : "login",
+        "loginAt" : 144938283,
+        "device" : "Mac OS Chrome"
+    }
+}
+```
+
+Parameter | Default | Type | Description
+--------- | ------- | ---- |-----------
+user || Object | 회원의 정보를 나타내는 객체
+user.email || String | 회원의 이메일
+user.nick || String |회원의 닉
+auth || Object | 회원의 인증 상태를 나타냅니다
+auth.state || String | 회원의 현재 상태 (default : login) 
+auth.loginAt || Date | 회원의 접속 시간  
+auth.device || String | 회원의 접속 기기 ()
+
+### PostStore
+
+포스트에 관한 데이터를 저장합니다
+
+```json
+{
+    "bestList" : [{
+        "title" : "Hello world",
+        "content" : "내용입니다"
+    }],
+    "postList" : [{
+        "title" : "Hello world",
+        "content" : "내용입니다"
+    }],
+    "readingPost" : {
+        "title" : "Hello world",
+        "content" : "내용입니다"
+    },
+    "writingPost" : {
+        "title" : "Hello world",
+        "content" : "내용입니다"
+    },
+    "userHas" : {
+        "postList" : [{
+            "title" : "Hello world",        
+            "content" : "내용 입니다"        
+        }],
+        "savedPost" : [{
+            "title" : "Hello world",        
+            "content" : "내용 입니다"
+        }],
+        "reportedPost" : [{
+            "title" : "Hello world",        
+            "content" : "내용 입니다"
+        }]
+    }
+}
+```
+
+Parameter | Default | Type | Description
+--------- | ------- | ---- |-----------
+bestList || Array | 베스트 글 리스트
+postList || Array | 클럽 글 리스트
+readingPost || Object | 단일 포스트
+writingPost || Object | 작성 포스트
+userHas || Object | 유저가 작성한 포스트 정보들 나타냅니다
+
+### ClubStore
+
+클럽에 관한 데이터를 저장합니다
+
+```json
+{
+    "clubNow" : {
+        "name" : "오늘의 베스트",
+        "type" : "default",
+        "url" : "starcraft2",
+        "id" : 2,
+        "description" : "스타2입니다",
+        "creator" : 1
+    },
+    "defaultClubList" : [{
+        "title" : "Hello world",
+        "content" : "내용입니다"
+    }],
+    "hotClubList" : [{
+        "title" : "Hello world",
+        "content" : "내용입니다"
+    }],
+    "userHas" : {
+        "createdClubList" : [{
+            "title" : "Hello world",        
+            "content" : "내용 입니다"        
+        }],
+        "subscribedClubList" : [{
+            "title" : "Hello world",        
+            "content" : "내용 입니다"
+        }]
+    }
+}
+```
+
+Parameter | Default | Type | Description
+--------- | ------- | ---- |-----------
+clubNow || Object | 현재 클럽 정보
+defaultClubList || Array | 디폴트 클럽 리스트
+hotClubList || Array | 핫 클럽 리스트
+userHas || Object | 유저와 클럽 관계
+userHas.createdClubList || Object | 유저가 생성한 클럽
+userHas.subscribedClubList || Object | 유저가 가입한 클럽
+
+
+## API Client
+
+데이터를 전송하는 규약입니다
+이때 데이터는 Api Server의 Composer Client로 보내지며, End-point에서 정의된 데이터대로
+key : value를 정의하여 보냅니다. 쉽게 말해 React state와 key값을 최대한 동일하게 작성합니다
+
+API는 React method, Store 등 에서 데이터를 규합해서 정리하고 Action에서 validate 이후 APIClient를 통해 API Server와 통신합니다
+
+> 일반적으로 API 데이터는 /ajax 로 호출하며, 이때의 형식은 다음과 같습니다 
+
+```javascript
+var request = require('superagent');
+
+var ApiClient = {
+    submitPost : (author, post, callback) => {
+        request
+            .post('/ajax/submit')
+            .send({author : author, writingPost: writingPost})
+            .set('Accept', 'application/json')
+            .withCredentials()
+            .end((xhrErr, xhrRes) => {
+                if(xhrErr) {
+                    callback(xhrErr, null);
+                } else if (xhrRes) {
+                    callback(null, xhrRes.body);
+                }
+            })
+    }
+}
+```
+
+# 회원 인증
 
 > To authorize, use this code:
 
@@ -53,9 +277,49 @@ curl "api_endpoint_here"
 
 > Make sure to replace `meowmeowmeow` with your API key.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+고블린 클럽의 회원 인증은 다음과 같은 단계를 거칩니다
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+1. 회원가입
+  - 아이디, 닉네임, 비밀번호 Form 작성
+  - UserAction에서 API Client 로 `/ajax/siginin` 으로 요청
+  - API Server에서 데이터를 데이터베이스 입력 후 Email 인증 요청
+  - Email 인증이 완료되면, 로그인 세션에 등록하여 회원가입 프로세스를 끝냅니다
+
+2. 로그인
+  - 아이디 닉네임 비밀번호 Form 작성
+  - UserAction.loginUser 로 `/ajax/login`으로 요청
+  - API Server에서 확인 후 세션 등록
+  
+3. 회원 인증 필수 데이터
+  - 페이지 요청시 회원 인증이 필요한 경우 Composer.Server에서 인증합니다
+  - 클라이언트에서 AJAX 요청시 필요할 경우 Composer.Client에서 데이터를 받아 Action에서 처리 후, Redirect 처리 합니다 
+  
+
+```json
+{
+  "id": 2,
+  "name": "Isis",
+  "breed": "unknown",
+  "fluffiness": 5,
+  "cuteness": 10
+}
+```
+
+This endpoint retrieves a specific kitten.
+
+<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
+
+### HTTP Request
+
+`GET http://example.com/kittens/<ID>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID | The ID of the kitten to retrieve
+
+
 
 `Authorization: meowmeowmeow`
 
@@ -66,6 +330,10 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 # Kittens
 
 ## Get All Kittens
+
+### Hello world
+
+#### Nice to meet you
 
 ```ruby
 require 'kittn'
