@@ -32,9 +32,35 @@ search: true
 - [Front Client(React) 문서](/doc/front)
 - [Front Server 문서](/doc/goblin)
 
+
 # 소개
 
-## Front Server -> React Store data 정의
+**/scripts** 내부의 폴더에 대해서 정의 합니다. React와 Alt flux로 구성되어 있고 각 Actions, Stores를 정의하고,
+React Component를 정의합니다.
+
+GobblinClub의 뷰는 React로 구성되어있습니다.
+각 뷰를 표현하는 데이터는 Flux Architecture 를 기반으로 한 Alt Framework 를 사용합니다
+Alt는 Action 들과 Store 들로 구성되어 있습니다
+
+데이터는 Store 에 모두 저장되고, Actions 에서 그 데이터들을 조작합니다.
+데이터 조회나, 수정, 삭제, 입력시 Actions 내에서 AJAX 요청을 생성하고 받아온 데이터를 Store 에 저장합니다.
+
+## Flux Architecture
+
+![flux](/doc/front/images/flux-diagram-white-background.png)
+
+[Flux](http://facebook.github.io/flux/docs/overview.html#content)
+
+[Alt](http://alt.js.org)
+
+[React](http://facebook.github.io/react/docs/getting-started.html)
+
+## 고블린 클럽의 Architecture
+
+![Gobblinclub Architecture](/doc/front/images/GobblinclubArchitecture.png)
+
+
+# Front Server -> React Store data 정의
 
 <aside class="notice">
 SEO를 목표로 하며, 주소창의 URL 접근시 데이터를 HTML에 삽입하여 React의 State를 Bootstrap 합니다
