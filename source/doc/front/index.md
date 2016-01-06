@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: Front React
 
 language_tabs:
   - shell
@@ -57,7 +57,95 @@ Alt는 Action 들과 Store 들로 구성되어 있습니다
 
 ## 고블린 클럽의 Architecture
 
-![Gobblinclub Architecture](/doc/front/images/GobblinclubArchitecture.png)
+![Gobblinclub Architecture](/doc/front/images/goblinclub-arch.png)
+
+# Resource
+
+## Page Request
+
+서버에서 렌더링 되는 페이지 입니다. 각 Store의 데이터는 페이지 초기 로딩에서 Bootstrap 됩니다. 
+따라서 따로 Store 데이터들을 설정할 필요가 없습니다.
+
+| Method | Endpoint | Usage |
+|--------|----------|-------|
+| GET | / | 고블린 클럽의 메인 페이지. 베스트 리스트를 나타냅니다 |
+| GET | /submit | 글 쓰기 페이지 입니다. 사용자는 여기서 글을 쓰고 클럽을 선택합니다 |
+| GET | /notFound | 고블린 클럽의 메인 페이지. 베스트 리스트를 나타냅니다 |
+| GET | /club/:clubName | 각 클럽의 리스트 페이지 입니다. 리스트가 가지고 있는 글들을 나타냅니다. |
+| GET | /club/:clubName/:article | 글을 나타내는 페이지 입니다 url 은 클럽이름 속에 종속됩니다. |
+
+**미완성 페이지**
+
+- | GET | /login | 고블린 클럽의 메인 페이지. 베스트 리스트를 나타냅니다 |
+- | GET | /signin | 고블린 클럽의 메인 페이지. 베스트 리스트를 나타냅니다 |
+- | GET | /club/:clubName/submit | 클럽에 속한 글 쓰기 페이지 입니다. |
+- | GET | /club/:clubName/search | 클럽에 속한 검색 페이지 입니다. |
+- /submit/club
+- /club
+- /search
+- /needEmailCode 
+- /user
+- /user/:id
+- /user/:id/history
+- /user/:id/clubs
+- /user/:id/submitted
+- /user/:id/commented
+- /user/:id/liked
+- /user/:id/dis_liked
+- /user/:id/favorated
+- /user/:id/saved
+- /club/:clubName/:article/comments
+- /club/:clubName/:article/comments/:comment
+- /user/:id/multiclub/:name
+- /user/:id/multiclub/:name/search
+
+## Action's API Call
+
+페이지가 로딩이 되고 난 이후 사용자의 Action에 따라서 Store 데이터를 로드합니다. 
+
+페이지 전체 데이터를 가져오는 것이 아니고, 각 Action에 맞는 데이터를 가져와서 Store 에 setting 합니다.
+
+| Method | Endpoint | Usage | Data |
+|--------|----------|-------|-------|
+| GET | /best | 베스트 글 리스트를 가져옵니다. | PostStore, ClubStore |
+| GET | /notFound | 고블린 클럽의 메인 페이지. 베스트 리스트를 나타냅니다 | UserStore, PostStore, ClubStore |
+| GET | /club/:clubName | 각 클럽의 글 리스트 데이터 입니다. 리스트가 가지고 있는 글들을 가져옵니다. | UserStore, PostStore, ClubStore |
+| GET | /club/:clubName/:postName | 글을 나타내는 데이터 입니다 url 은 클럽이름 속에 종속됩니다. | UserStore, PostStore, ClubStore |
+| POST | /submit | 글 쓰기 요청을 합니다. | post |
+| POST | /login | 로그인 요청을 합니다. | user |
+| POST | /signin | 회원가입 요청을 합니다. | user |
+
+# Auth
+
+회원은 로그인 할 때 Json Web Token (JWT)를 쿠키에 받으며, 이 토큰은 회원임을 증명합니다.
+
+토큰을 사용하여 각 요청시마다 Api server에서 Token을 인증하며, 토큰이 잘못 되었거나 에러를 나타냅니다.
+
+## 회원가입
+
+## 로그인
+
+## API 요청
+
+## 회원 전용 요청
+
+### 글쓰기
+
+### 투표
+
+### 회원 접근 페이지
+
+
+# React View
+
+# Store
+
+# Action
+
+# Api Client
+
+# Validator
+
 
 
 # Front Server -> React Store data 정의

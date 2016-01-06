@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: API Server
 
 language_tabs:
   - shell
