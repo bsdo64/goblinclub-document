@@ -1,0 +1,19 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules",
+    "build/"
+  ],
+  "verbose": false,
+  "events": {
+    "restart": "rake build"
+  },
+  "watch": [
+    "source/"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ext": "md"
+}
