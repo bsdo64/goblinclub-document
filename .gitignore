@@ -14,9 +14,4 @@ tmp
 *.DS_STORE
 build/
 .cache
-
-# YARD artifacts
-.yardoc
-_yardoc
-doc/
 .idea/
