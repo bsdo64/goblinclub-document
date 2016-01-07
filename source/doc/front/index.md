@@ -117,13 +117,33 @@ Alt는 Action 들과 Store 들로 구성되어 있습니다
 
 # Auth
 
-회원은 로그인 할 때 Json Web Token (JWT)를 쿠키에 받으며, 이 토큰은 회원임을 증명합니다.
+회원은 로그인 할 때 Json Web Token (JWT)를 쿠키에 받으며, 이 토큰은 회원의 서명을 가지고 있습니다.
 
-토큰을 사용하여 각 요청시마다 Api server에서 Token을 인증하며, 토큰이 잘못 되었거나 에러를 나타냅니다.
+Cookie 에 저장된 JWT는 매 요청시마다 Front Server 에서 Header에 저장되어 API 요청을 수행합니다.
+
+* 클라이언트에서 토큰은 Action에서 API Client의 Cookie에 저장되어 요청합니다.
+* 서버에서 토큰은 Front Server에서 Cookie받아온것을 API Client의 Header에 저장됭어 요청합니다.
+
+토큰을 사용하여 각 요청시마다 Api server에서 Token을 인증하며, 토큰이 잘못 되었을 경우 에러를 반환 합니다.
+에러를 받으면 
+
+* 서버에서는 /login 페이지로 Redirect 하며,
+* 클라이언트에서는 각 뷰에서 사용자 오류를 보여주고 /login 페이지로 유도 하거나 합니다.
+
+
 
 ## 회원가입
 
+### Diagram
+
+![signin](/doc/front/images/goblin-signin.png)
+
 ## 로그인
+
+### Diagram
+
+![login](/doc/front/images/goblin-login.png)
+
 
 ## API 요청
 
