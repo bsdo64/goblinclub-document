@@ -59,6 +59,12 @@ Alt는 Action 들과 Store 들로 구성되어 있습니다
 
 ![Gobblinclub Architecture](/doc/front/images/goblinclub-arch.png)
 
+# API 요청
+
+## Diagram
+
+![request-api](/doc/front/images/goblin-request-api.png)
+
 # Resource
 
 ## Page Request
@@ -131,12 +137,12 @@ Cookie 에 저장된 JWT는 매 요청시마다 Front Server 에서 Header에 �
 * 클라이언트에서는 각 뷰에서 사용자 오류를 보여주고 /login 페이지로 유도 하거나 합니다.
 
 
-
 ## 회원가입
 
 ### Diagram
 
 ![signin](/doc/front/images/goblin-signin.png)
+
 
 ## 로그인
 
@@ -144,17 +150,36 @@ Cookie 에 저장된 JWT는 매 요청시마다 Front Server 에서 Header에 �
 
 ![login](/doc/front/images/goblin-login.png)
 
+## 일반 글쓰기 페이지
 
-## API 요청
+> /submit
 
-## 회원 전용 요청
+/submit 페이지에 접근하는 것을 뜻합니다. 로그인 하지 않은 회원은 /submit 페이지에 접근 할 수 없습니다.
+만약 회원이 임의로 접근할 경우 /login 페이지로 redirect 하며, 클라이언트에서 접근 할 경우 알림 후에 /login 페이지로 안내합니다.
 
-### 글쓰기
+## 회원 정보 페이지
 
-### 투표
+> /user
 
-### 회원 접근 페이지
+/user 페이지에 접근하는 것을 뜻합니다. 로그인 하지 않은 회원은 /user 페이지에 접근 할 수 없습니다.
+만약 회원이 임의로 접근할 경우 /login 페이지로 redirect 하며, 클라이언트에서 접근 할 경우 알림 후에 /login 페이지로 안내합니다.
 
+## 클럽 만들기 페이지
+
+> /submit/club
+
+/submit/club 페이지에 접근하는 것을 뜻합니다. 로그인 하지 않은 회원은 /submit/club 페이지에 접근 할 수 없습니다.
+만약 회원이 임의로 접근할 경우 /login 페이지로 redirect 하며, 클라이언트에서 접근 할 경우 알림 후에 /login 페이지로 안내합니다.
+
+## 댓글쓰기 Action
+
+PostAction#submit을 의미합니다. 로그인 하지 않은 회원은 접근 할 수 없습니다.
+만약 회원이 임의로 접근할 경우 /login 페이지로 redirect 하며, 클라이언트에서 접근 할 경우 알림 후에 /login 페이지로 안내합니다.
+
+## 투표하기 Action
+
+CommentAction#submit을 뜻합니다. 로그인 하지 않은 회원은 접근 할 수 없습니다.
+만약 회원이 임의로 접근할 경우 /login 페이지로 redirect 하며, 클라이언트에서 접근 할 경우 알림 후에 /login 페이지로 안내합니다.
 
 # React View
 
